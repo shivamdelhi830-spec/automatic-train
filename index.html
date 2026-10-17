@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d19">
+<title>Biology Hub — Learn. Practice. Achieve.</title>
+<style>
+:root{
+ --bg:#090d19;--panel:#111827;--panel2:#151e30;
+ --green:#6cf5b4;--purple:#9d8cff;--text:#f4f7ff;
+ --muted:#9ba8bd;--line:#283248;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+ font-family:Inter,system-ui,-apple-system,Arial,sans-serif}
+button,input,select{font:inherit}
+a{color:var(--green);text-decoration:none}
+.wrap{max-width:1120px;margin:auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:10;background:#090d19ed;
+ backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.navinner{min-height:70px;display:flex;align-items:center;
+ justify-content:space-between;gap:15px}
+.logo{font-size:21px;font-weight:850;letter-spacing:-.7px}
+.logo span{color:var(--green)}
+.navlinks{display:flex;gap:20px;align-items:center;font-size:13px}
+.navlinks a{color:var(--muted)}
+.navlinks a:hover{color:var(--green)}
+.hero{padding:62px 0 32px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:280px;height:280px;
+ background:#6cf5b422;filter:blur(90px);right:0;top:10px;pointer-events:none}
+.pill{display:inline-flex;gap:8px;align-items:center;
+ border:1px solid #6cf5b455;background:#6cf5b40d;color:var(--green);
+ padding:8px 12px;border-radius:99px;font-size:12px;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+h1{font-size:clamp(38px,7vw,68px);letter-spacing:-2.8px;
+ line-height:1.04;margin:22px 0 18px;max-width:780px}
+.gradient{background:linear-gradient(90deg,var(--green),var(--purple));
+ -webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:620px;line-height:1.8;color:var(--muted);font-size:16px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;
+ border:1px solid var(--line);border-radius:12px;padding:13px 18px;
+ cursor:pointer;font-weight:750;color:var(--text);background:var(--panel2)}
+.btn.primary{background:var(--green);color:#06140e;border-color:var(--green)}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
+.stat,.card{background:linear-gradient(145deg,#151e30,#101625);
+ border:1px solid var(--line);border-radius:18px;padding:19px}
+.stat strong{font-size:25px;display:block;letter-spacing:-1px}
+.stat span{font-size:12px;color:var(--muted)}
+section{scroll-margin-top:85px}
+.section{padding:30px 0}
+.sectionhead{display:flex;justify-content:space-between;gap:15px;
+ align-items:end;margin-bottom:18px;flex-wrap:wrap}
+h2{font-size:25px;letter-spacing:-.7px;margin:0 0 8px}
+.sub{color:var(--muted);font-size:13px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.feature{min-height:155px}
+.icon{font-size:25px;margin-bottom:16px}
+.feature h3,.chapter h3{margin:0 0 8px;font-size:16px}
+.feature p{color:var(--muted);font-size:13px;line-height:1.7;margin:0}
+.controls{display:grid;grid-template-columns:1fr 1.5fr;gap:12px;margin:18px 0}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:8px}
+.field input,.field select{width:100%;padding:13px;background:#0b1120;
+ color:var(--text);border:1px solid var(--line);border-radius:11px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--green)}
+.chaptergrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.chapter{padding:16px;background:var(--panel);border:1px solid var(--line);
+ border-radius:15px;display:flex;flex-direction:column;gap:12px}
+.chapter .num{color:var(--green);font-size:11px;font-weight:800}
+.chapter .status{font-size:11px;color:var(--muted)}
+.chapter .btn{margin-top:auto;padding:10px;font-size:12px}
+.badge{font-size:10px;color:var(--green);border:1px solid #6cf5b433;
+ padding:5px 8px;border-radius:20px;width:max-content}
+.quizbox{max-width:720px;margin:auto}
+.quiztop{display:flex;justify-content:space-between;gap:10px;
+ flex-wrap:wrap;color:var(--muted);font-size:13px}
+.bar{height:6px;border-radius:20px;background:#263147;margin:17px 0 24px;overflow:hidden}
+.bar div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--purple))}
+#qtext{font-size:21px;line-height:1.5;margin:15px 0}
+.answers{display:grid;gap:10px}
+.answer{padding:14px;text-align:left;background:#0c1322;color:var(--text);
+ border:1px solid var(--line);border-radius:11px;cursor:pointer}
+.answer.selected{border-color:var(--green);background:#6cf5b416}
+.answer:disabled{cursor:default}
+.quizbuttons{display:flex;gap:10px;margin-top:18px}
+.quizbuttons .btn{flex:1}
+.hidden{display:none!important}
+.resultscore{font-size:54px;font-weight:900;letter-spacing:-2px}
+.ranklist{padding-left:22px;color:var(--muted);line-height:1.9}
+.faq details{padding:15px 0;border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:700;font-size:14px}
+.faq details p{color:var(--muted);font-size:13px;line-height:1.8}
+footer{margin-top:45px;border-top:1px solid var(--line);padding:32px 0}
+.footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:25px}
+footer p,footer li{font-size:12px;color:var(--muted);line-height:1.9}
+footer ul{list-style:none;padding:0}
+.notice{color:var(--muted);font-size:12px;line-height:1.7;margin-top:14px}
+@media(max-width:760px){
+ .navlinks{gap:12px}.navlinks a:nth-child(2){display:none}
+ .grid,.chaptergrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero{padding-top:43px}h1{letter-spacing:-1.7px}
+ .footgrid{grid-template-columns:1fr 1fr}
+ .footgrid>div:first-child{grid-column:1/-1}
+}
+@media(max-width:450px){
+ .wrap{padding:0 14px}.grid,.chaptergrid{grid-template-columns:1fr}
+ .stats{gap:8px}.stat{padding:12px}.stat strong{font-size:20px}
+ .stat span{font-size:10px}.controls{grid-template-columns:1fr}
+ .navlinks{font-size:12px;gap:10px}.logo{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+ <div class="wrap navinner">
+  <a class="logo" href="#">🧬 Biology<span>Hub</span></a>
+  <div class="navlinks">
+   <a href="#features">Features</a>
+   <a href="#chapters">Chapters</a>
+   <a href="#leaderboard">Leaderboard</a>
+   <a href="#contact">Contact</a>
+  </div>
+ </div>
+</nav>
+
+<header class="wrap hero">
+ <span class="pill"><span class="dot"></span> YOUR BIOLOGY LEARNING SPACE</span>
+ <h1>Master Biology.<br><span class="gradient">Own Your Future.</span></h1>
+ <p class="lead">Study smarter for NEET with chapter-wise practice, timed quizzes and progress tracking. One question at a time, one step closer to your goal.</p>
+ <div class="actions">
+  <a class="btn primary" href="#chapters">Explore Chapters ↗</a>
+  <a class="btn" href="#features">Discover Features</a>
+ </div>
+ <div class="stats">
+  <div class="stat"><strong>2</strong><span>Classes · XI & XII</span></div>
+  <div class="stat"><strong>10</strong><span>Questions per quiz</span></div>
+  <div class="stat"><strong>10 min</strong><span>Quiz timer</span></div>
+ </div>
+</header>
+
+<main class="wrap">
+<section id="features" class="section">
+ <div class="sectionhead">
+  <div><h2>Everything in one place.</h2>
+  <div class="sub">Made for focused learning and consistent practice.</div></div>
+ </div>
+ <div class="grid">
+  <article class="card feature"><div class="icon">🎯</div>
+   <h3>Chapter-wise practice</h3><p>Choose a topic and practise without mixing chapters.</p></article>
+  <article class="card feature"><div class="icon">⏱️</div>
+   <h3>Timed challenges</h3><p>Build speed with a 10-minute quiz timer.</p></article>
+  <article class="card feature"><div class="icon">📊</div>
+   <h3>Score tracking</h3><p>Review your recent scores saved on this device.</p></article>
+  <article class="card feature"><div class="icon">🔀</div>
+   <h3>Random questions</h3><p>Available question sets are shuffled for each attempt.</p></article>
+  <article class="card feature"><div class="icon">📱</div>
+   <h3>Mobile-first design</h3><p>Study on your phone, tablet or computer.</p></article>
+  <article class="card feature"><div class="icon">🚀</div>
+   <h3>More features ahead</h3><p>Accounts, cloud sync and a shared leaderboard can be added later.</p></article>
+ </div>
+</section>
+
+<section id="chapters" class="section">
+ <div class="sectionhead">
+  <div><h2>Explore Biology</h2>
+  <div class="sub">Choose your class and find a chapter.</div></div>
+ </div>
+ <div class="controls">
+  <div class="field"><label for="classSelect">YOUR CLASS</label>
+   <select id="classSelect" onchange="loadChapters()">
+    <option value="11">Class 11 Biology</option>
+    <option value="12">Class 12 Biology</option>
+   </select></div>
+  <div class="field"><label for="search">SEARCH CHAPTERS</label>
+   <input id="search" placeholder="Search a chapter..." oninput="renderChapters()"></div>
+ </div>
+ <div id="chaptergrid" class="chaptergrid"></div>
+ <p class="notice">Syllabus and chapter availability can vary by textbook edition. Quiz questions are currently available for selected chapters only; other chapters are marked as coming soon.</p>
+</section>
+
+<section id="quizsection" class="section hidden">
+ <div class="card quizbox">
+  <div class="quiztop"><span id="qcount">QUESTION 1 / 10</span><span>⏱ <b id="timer">10:00</b></span></div>
+  <div class="bar"><div id="bar"></div></div>
+  <span class="badge" id="quizchapter">CHAPTER</span>
+  <h2 id="qtext">Question</h2>
+  <div id="answers" class="answers"></div>
+  <div class="quizbuttons">
+   <button class="btn" onclick="quitQuiz()">Exit</button>
+   <button class="btn primary" id="next" onclick="nextQuestion()">Next →</button>
+  </div>
+  <p class="notice">Choose one answer before moving to the next question.</p>
+ </div>
+</section>
+
+<section id="result" class="section hidden">
+ <div class="card quizbox">
+  <span class="badge">QUIZ COMPLETED</span>
+  <h2 style="margin-top:18px">Your result</h2>
+  <div class="resultscore gradient" id="scoreText">0/10</div>
+  <p id="resultmessage" class="sub"></p>
+  <button class="btn primary" onclick="backToChapters()">Choose another chapter</button>
+ </div>
+</section>
+
+<section id="leaderboard" class="section">
+ <div class="sectionhead"><div><h2>Your leaderboard</h2>
+ <div class="sub">Top saved scores on this device.</div></div></div>
+ <div class="card"><ol id="scores" class="ranklist"></ol>
+ <button class="btn" onclick="clearScores()">Clear local scores</button>
+ <p class="notice">This is not yet a public leaderboard. Scores are stored in this browser only.</p></div>
+</section>
+
+<section class="section faq">
+ <h2>Frequently asked questions</h2>
+ <details><summary>Is Biology Hub free?</summary>
+ <p>This prototype runs as a static webpage. Hosting it on a free static hosting service is possible. Future services may have their own limits.</p></details>
+ <details><summary>Why are some chapters marked coming soon?</summary>
+ <p>The chapter list is included, but each chapter needs its own checked question bank. A chapter should not be labelled quiz-ready until its questions are added.</p></details>
+ <details><summary>Will the leaderboard show everyone?</summary>
+ <p>Not yet. A shared leaderboard needs a secure online database and rules to prevent spam and fake scores.</p></details>
+ <details><summary>Can I use this for NEET preparation?</summary>
+ <p>Use the available quizzes for extra practice, and continue studying your NCERT textbook and trusted study material. This prototype does not yet cover the entire syllabus.</p></details>
+</section>
+</main>
+
+<footer id="contact">
+ <div class="wrap footgrid">
+  <div><a class="logo" href="#">🧬 Biology<span>Hub</span></a>
+   <p>Learn. Practise. Grow.<br>A student-focused biology learning project.</p>
+   <p>Independent educational project; not an official NCERT or NTA website.</p></div>
+  <div><strong>Explore</strong><ul>
+   <li><a href="#chapters">Chapter library</a></li>
+   <li><a href="#features">Features</a></li>
+   <li><a href="#leaderboard">Your scores</a></li>
+  </ul></div>
+  <div><strong>Contact</strong><ul>
+   <li><a href="mailto:shivamdelhi830@gmail.com">Email the creator</a></li>
+   <li><a href="mailto:shivamdelhi830@gmail.com">shivamdelhi830@gmail.com</a></li>
+  </ul></div>
+ </div>
+ <div class="wrap notice">© <span id="year"></span> Biology Hub. Built for learning.</div>
+</footer>
+
+<script>
+const chapterList={
+"11":[
+"The Living World","Biological Classification","Plant Kingdom","Animal Kingdom",
+"Morphology of Flowering Plants","Anatomy of Flowering Plants",
+"Structural Organisation in Animals","Cell: The Unit of Life","Biomolecules",
+"Cell Cycle and Cell Division","Photosynthesis in Higher Plants",
+"Respiration in Plants","Plant Growth and Development",
+"Breathing and Exchange of Gases","Body Fluids and Circulation",
+"Excretory Products and their Elimination","Locomotion and Movement",
+"Neural Control and Coordination","Chemical Coordination and Integration"
+],
+"12":[
+"Sexual Reproduction in Flowering Plants","Human Reproduction","Reproductive Health",
+"Principles of Inheritance and Variation","Molecular Basis of Inheritance",
+"Evolution","Human Health and Disease","Microbes in Human Welfare",
+"Biotechnology: Principles and Processes","Biotechnology and its Applications",
+"Organisms and Populations","Ecosystem","Biodiversity and Conservation"
+]};
+
+const banks={
+"The Living World":[
+["Taxonomy mein kya shamil hai?",["Identification, nomenclature aur classification","Sirf respiration","Sirf digestion","Sirf movement"],0],
+["Binomial nomenclature ko popular kisne kiya?",["Charles Darwin","Carolus Linnaeus","Robert Hooke","Louis Pasteur"],1],
+["Taxonomic hierarchy ki basic unit kya hai?",["Kingdom","Phylum","Species","Class"],2],
+["Herbarium mein kya rakha jata hai?",["Preserved plant specimens","Live fish","Animal sounds","Soil only"],0],
+["Scientific name ke do parts kya hain?",["Family aur order","Genus aur specific epithet","Class aur phylum","Kingdom aur class"],1],
+["Botanical garden mein kya maintain kiya jata hai?",["Living plant collections","Fossil fuel","Animal bones only","Minerals only"],0],
+["Taxonomic key ka main use kya hai?",["Organisms ki identification","Digestion","Blood circulation","Photosynthesis"],0],
+["Homo sapiens mein Homo kya hai?",["Genus","Family","Order","Class"],0],
+["Scientific name mein genus ka first letter kaisa hota hai?",["Capital","Lowercase always","Number","Symbol"],0],
+["Species kya hai?",["Basic taxonomic unit","Highest taxonomic rank","An ecosystem only","An organ only"],0],
+["Family se upar ka taxonomic category kaunsa hai?",["Genus","Species","Order","Variety"],2],
+["Printed scientific names aam taur par kaise likhe jate hain?",["Italics mein","All capitals mein","Numbers mein","Quotation marks only"],0],
+["Museum ka ek biological use kya hai?",["Preserved specimens ka study","Living crops ugana only","Weather forecast","Water purification only"],0],
+["Taxonomy ka focus kya hai?",["Identification aur classification","Only energy production","Only evolution experiments","Only ecology"],0],
+["Scientific names ka standard use kisliye hota hai?",["Organisms ke liye universal naming","Local weather naming","Food recipes","Body temperature"],0],
+["Systematics mein kya study hota hai?",["Diversity aur evolutionary relationships","Only digestion","Only respiration","Only movement"],0]
+],
+"Biological Classification":[
+["Five-kingdom classification kisne propose kiya?",["R.H. Whittaker","Linnaeus","Mendel","Darwin"],0],
+["Five-kingdom classification kis year mein propose hua?",["1969","1859","1905","2001"],0],
+["Bacteria ko five-kingdom system mein kis kingdom mein rakha gaya?",["Monera","Fungi","Animalia","Plantae"],0],
+["Fungi ki cell wall mein aam taur par kya hota hai?",["Chitin","Bone","Keratin only","Silica only"],0],
+["Yeast aam taur par kya hai?",["Unicellular fungus","Virus","Mammal","Flowering plant"],0],
+["Lichen kin organisms ka association hai?",["Alga/cyanobacterium aur fungus","Do mammals","Do viruses","Root aur flower"],0],
+["Viruses multiply karne ke liye kya use karte hain?",["Living host cells","Sunlight alone","Soil alone","Rocks"],0],
+["Mycoplasma ki khas baat kya hai?",["Cell wall absent hoti hai","Chloroplast hamesha hota hai","Ye mammals hain","Ye flowering plants hain"],0],
+["Cyanobacteria ko pehle aam taur par kya kaha jata tha?",["Blue-green algae","Red fungi","Mosses","Protozoa"],0],
+["Amoeba kis group ka example hai?",["Protozoan","Fungus","Mammal","Seed plant"],0],
+["Diatoms ki cell wall mein kya hota hai?",["Silica","Chitin","Keratin","Bone"],0],
+["Euglenoids mein movement ke liye kya hota hai?",["Flagellum","Roots","Legs","Wings"],0],
+["Slime moulds ko five-kingdom system mein kahan rakha jata hai?",["Protista","Animalia","Plantae","Monera"],0],
+["Fungi aam taur par nutrients kaise absorb karte hain?",["Absorption se","Photosynthesis se","Sunlight se directly","Roots se"],0],
+["Archaebacteria kis tarah ke environments mein bhi mil sakte hain?",["Extreme environments","Only flowers","Only animal blood","Only dry seeds"],0],
+["Prokaryotic cells mein kya absent hota hai?",["Membrane-bound nucleus","Cell membrane","Ribosomes","Cytoplasm"],0]
+]};
+
+let questions=[],pos=0,score=0,choice=null,seconds=600,clock=null,done=false;
+let player="Student",currentChapter="";
+const $=id=>document.getElementById(id);
+
+function loadChapters(){renderChapters()}
+function renderChapters(){
+ const cls=$("classSelect").value,term=$("search").value.toLowerCase().trim();
+ const area=$("chaptergrid");area.innerHTML="";
+ chapterList[cls].filter(c=>c.toLowerCase().includes(term)).forEach((c,i)=>{
+  const available=!!banks[c];
+  const article=document.createElement("article");
+  article.className="chapter";
+  const n=document.createElement("div");n.className="num";
+  n.textContent="CLASS "+cls+" · CHAPTER "+(chapterList[cls].indexOf(c)+1);
+  const title=document.createElement("h3");title.textContent=c;
+  const status=document.createElement("div");status.className="status";
+  status.textContent=available?"✓ Quiz available":"◷ Question bank coming soon";
+  const btn=document.createElement("button");
+  btn.className="btn "+(available?"primary":"");
+  btn.textContent=available?"Start practice →":"Coming soon";
+  btn.disabled=!available;
+  btn.onclick=()=>startQuiz(c);
+  article.append(n,title,status,btn);area.appendChild(article);
+ });
+ if(!area.children.length)area.textContent="No chapters match your search.";
+}
+function shuffle(arr){
+ const a=arr.slice();
+ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+ return a;
+}
+function startQuiz(chapter){
+ if(!banks[chapter]||banks[chapter].length<10){
+  alert("Is chapter ka question bank abhi tayyar nahi hai.");return;
+ }
+ currentChapter=chapter;
+ player=$("name")?.value?.trim()||"Student";
+ questions=shuffle(banks[chapter]).slice(0,10);
+ pos=0;score=0;choice=null;seconds=600;done=false;
+ $("quizchapter").textContent=chapter.toUpperCase();
+ $("result").classList.add("hidden");
+ $("chapters").scrollIntoView({behavior:"smooth"});
+ $("quizsection").classList.remove("hidden");
+ showQuestion();updateTimer();clearInterval(clock);
+ clock=setInterval(()=>{seconds--;updateTimer();if(seconds<=0)finishQuiz()},1000);
+}
+function updateTimer(){
+ $("timer").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+
+ String(seconds%60).padStart(2,"0");
+}
+function showQuestion(){
+ choice=null;const q=questions[pos];
+ $("qcount").textContent=`QUESTION ${pos+1} / 10`;
+ $("bar").style.width=(pos*10)+"%";$("qtext").textContent=q[0];
+ const area=$("answers");area.innerHTML="";
+ q[1].forEach((text,i)=>{
+  const b=document.createElement("button");b.className="answer";
+  b.textContent=String.fromCharCode(65+i)+". "+text;
+  b.onclick=()=>{choice=i;[...area.children].forEach(x=>x.classList.remove("selected"));b.classList.add("selected")};
+  area.appendChild(b);
+ });
+ $("next").textContent=pos===9?"Finish quiz ✓":"Next →";
+}
+function nextQuestion(){
+ if(done)return;
+ if(choice===null){alert("Pehle ek answer select karo!");return}
+ if(choice===questions[pos][2])score++;
+ pos++;if(pos===10){finishQuiz();return}showQuestion();
+}
+function finishQuiz(){
+ if(done)return;done=true;clearInterval(clock);
+ $("quizsection").classList.add("hidden");$("result").classList.remove("hidden");
+ $("bar").style.width="100%";$("scoreText").textContent=score+"/10";
+ $("resultmessage").textContent=score>=8?"Excellent work! Keep going. 🎉":
+ score>=5?"Good effort. Revise and practise again. 💪":"Keep learning. Review the chapter and try again. 🌱";
+ let data=[];try{data=JSON.parse(localStorage.getItem("bhScores")||"[]")}catch(e){}
+ data.push({name:player,score,chapter:currentChapter,date:new Date().toLocaleDateString()});
+ data.sort((a,b)=>b.score-a.score);
+ try{localStorage.setItem("bhScores",JSON.stringify(data.slice(0,10)))}catch(e){}
+ renderScores();$("result").scrollIntoView({behavior:"smooth"});
+}
+function quitQuiz(){
+ if(confirm("Quiz se exit karna hai? Current attempt save nahi hoga.")){
+  clearInterval(clock);done=true;$("quizsection").classList.add("hidden");
+  $("chapters").scrollIntoView({behavior:"smooth"});
+ }
+}
+function backToChapters(){
+ $("result").classList.add("hidden");$("chapters").scrollIntoView({behavior:"smooth"});
+}
+function renderScores(){
+ let data=[];try{data=JSON.parse(localStorage.getItem("bhScores")||"[]")}catch(e){}
+ const list=$("scores");list.innerHTML="";
+ if(!data.length){list.innerHTML="<li>Abhi koi score nahi. Quiz complete karke shuru karo!</li>";return}
+ data.forEach(r=>{const li=document.createElement("li");
+ li.textContent=`${r.name} — ${r.score}/10 · ${r.chapter} · ${r.date||""}`;list.appendChild(li)});
+}
+function clearScores(){
+ if(confirm("Is device par saved scores delete karne hain?")){
+  localStorage.removeItem("bhScores");renderScores();
+ }
+}
+$("year").textContent=new Date().getFullYear();
+loadChapters();renderScores();
+</script>
+</body>
+</html>
